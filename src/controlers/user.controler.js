@@ -1,5 +1,6 @@
 import { User } from "../models/user.model.js";
 import { Car } from "../models/car.model.js";
+import fs, { fdatasync } from "fs"
 
 
 const registration = async(req, res) => {
@@ -178,7 +179,7 @@ const addCar = async(req, res) => {
         console.log("imageCloudinaryUrl:", imageCloudinaryUrl);
     
         // 3.
-        const {company, model, model_year, base_price, max_price} = req.body;
+        const {company, model, model_year, base_price, max_price, registration_no, RTO, owner, winner} = req.body;
     
         const data = await Car.create({
             company,
@@ -186,13 +187,17 @@ const addCar = async(req, res) => {
             image: imageCloudinaryUrl,
             model_year,
             base_price,
-            max_price
+            max_price,
+            registration_no,
+            RTO,
+            owner,
+            winner
         })
     
     
         // 4.
         if(data){
-            // fs.unlinkSync(localFilePath)
+            fs.unlinkSync(localFilePath)
         }
     
     
@@ -212,7 +217,25 @@ const allCars = async(req, res)=>{
         const Cars = await Car.find({})
         res.send(Cars)
     } catch (error) {
-        res.send(`Error in showing Cars! \n ${error}`)
+        res.send(`Error in showing Cars! \n ${error}`)  
+    }
+}
+
+
+
+
+const updateMax = async(req, res) => {
+    try {
+        const {maxBid, id, winner} = req.body;
+        const response = await Car.updateOne({_id: id}, {$set:{max_price: maxBid, winner: winner}})
+        if(!response){
+            res.send(`Unable to update max \n`)
+        }
+        console.log(`Updated max bid successfully! \n ${response}`);
+        res.send(`Updated max bid successfully!`);
+    } catch (error) {
+        console.log(`error in update max \n ${error}`);
+        res.send(`error in update max`);
     }
 }
 
@@ -229,4 +252,4 @@ const allUsers = async(req, res)=>{
 }
 
 
-export {registration, loginUser, addCar, upload, allCars, allUsers};
+export {registration, loginUser, addCar, upload, allCars, allUsers, updateMax};

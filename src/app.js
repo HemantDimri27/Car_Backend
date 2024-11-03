@@ -13,23 +13,23 @@ app.use(express.urlencoded({extended: false}))
 
 // router
 import router from "./routers/user.router.js";
-app.use('/', router)
+app.use('/api/auction', router)
 
 
 
 
-// put data in db
-app.post("/add", (req, res)=>{
-    try {
-        const data = req.body
-        const resData = User.create(data)
-        res.send(`Data is save`);
-        console.log("Data is save.");
-    } catch (error) {
-        res.send(`Data is not save ${error}`);
-        console.log("Data not save.");
-    }
-})
+// // put data in db
+// app.post("/add", (req, res)=>{
+//     try {
+//         const data = req.body
+//         const resData = User.create(data)
+//         res.send(`Data is save`);
+//         console.log("Data is save.");
+//     } catch (error) {
+//         res.send(`Data is not save ${error}`);
+//         console.log("Data not save.");
+//     }
+// })
 
 
 

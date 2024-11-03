@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 const carSchema = new mongoose.Schema({
-    // brand, model, model_year, base_price, max_price, owner
+    // brand, model, model_year, base_price, max_price, owner, registration_No. , RTO
     company: {
         type: String,
         required: true
@@ -24,13 +24,22 @@ const carSchema = new mongoose.Schema({
     },
     max_price: {
         type: Number,
-        required: true,
+        // required: true,
+    },
+    registration_no: {
+        type: String,
+        // required: true,
+    },
+    RTO : {
+        type: String,
+        // required: true,
     },
     owner: {
-        type: Schema.Types.ObjectId,
-        ref: "User"
+        type: String,
+    },
+    winner: {
+        type: String,
     }
-
 })
 
 

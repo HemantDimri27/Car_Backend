@@ -7,6 +7,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    userName: {
+        type: String,
+        required: true,
+    },
     email: {
         type: String,
         required: true
@@ -25,6 +29,9 @@ const userSchema = new mongoose.Schema({
     car: {
         type: Schema.Types.ObjectId,
         ref: "Car"
+    },
+    winning: {
+        type: String,   // str += registration_no
     }
 })
 
